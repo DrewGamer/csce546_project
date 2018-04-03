@@ -1,0 +1,8 @@
+{
+  "name": "CSCE546",
+  "app_id": "f1177c4e",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
