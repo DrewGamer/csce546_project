@@ -51,6 +51,25 @@ export class Database {
     });
   }
 
+
+  //Gets documents inside of "collection" and returns it as an array. 
+  //Only returns documents in which the field is related to the match by the comparator.
+  async query(collection, field, comparator, match, return_function) {
+    var col = this.afs.collection(collection, (ref) => {
+      return ref.where(field, comparator, match);
+    });
+    col.valueChanges().subscribe( items => {
+      var documents = new Array(items.length);
+      for (var i = 0; i < items.length; i++) {
+        for (var item in items[i]) {
+          documents[i] = {};
+          documents[i][item] = items[i][item];
+        }
+      }
+      return_function(documents);
+    });
+  }
+
   //Deletes all documents in "collection" in which the "field" equals "match".
   //Returns the number of items deleted.
   async delete(collection, field, match, return_function) {
