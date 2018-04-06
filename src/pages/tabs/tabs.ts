@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+import { CategoriesPage } from '../categories/categories';
+import { AccountPage } from '../account/account';
+import { PromotePage } from '../promote/promote';
 import { HomePage } from '../home/home';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -12,8 +13,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  tab2Root = CategoriesPage;
+  tab3Root = PromotePage;
+  tab4Root = AccountPage;
 
   public database_data = {};
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {

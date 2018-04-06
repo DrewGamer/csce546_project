@@ -42,8 +42,8 @@ export class Database {
     col.valueChanges().subscribe( items => {
       var documents = new Array(items.length);
       for (var i = 0; i < items.length; i++) {
+        documents[i] = {};
         for (var item in items[i]) {
-          documents[i] = {};
           documents[i][item] = items[i][item];
         }
       }
@@ -51,24 +51,64 @@ export class Database {
     });
   }
 
-
-  //Gets documents inside of "collection" and returns it as an array. 
-  //Only returns documents in which the field is related to the match by the comparator.
-  async query(collection, field, comparator, match, return_function) {
+  /*async query(collection, field, comparator, match, return_function) {
     var col = this.afs.collection(collection, (ref) => {
       return ref.where(field, comparator, match);
     });
     col.valueChanges().subscribe( items => {
       var documents = new Array(items.length);
       for (var i = 0; i < items.length; i++) {
+        documents[i] = {};
         for (var item in items[i]) {
-          documents[i] = {};
           documents[i][item] = items[i][item];
         }
       }
       return_function(documents);
     });
+  }*/
+
+  //Gets documents inside of "collection" and returns it as an array. 
+  //Only returns documents in which the field is related to the match by the comparator.
+  async query(collection, field, comparator, match, return_function) {
+    /*if (field == "id") {
+      var docRef = this.afs.collection(collection).doc(match);
+      docRef.ref.get().then( (document) => {
+        if (document.exists) {
+          var documents = {document.data()};
+          return_function(documents);
+        } else {
+          return_function(undefined);
+        }
+      }).catch( (error) => {
+        return_function(undefined);
+      });
+      return;
+    }*/
+    //var count = undefined;
+    var col = this.afs.collection(collection, ref => {
+      return ref.where(field, comparator, match);
+    });
+    col.snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    }).subscribe( items => {
+      var documents = new Array(items.length);
+      for (var i = 0; i < items.length; i++) {
+        documents[i] = {};
+        for (var item in items[i]) {
+          documents[i][item] = items[i][item];
+        }
+      }
+      return_function(documents);
+      //if (count == undefined) count = documents.length;
+      //if (documents.length == 0) return_function(count);
+    });
+    
   }
+
 
   //Deletes all documents in "collection" in which the "field" equals "match".
   //Returns the number of items deleted.
@@ -120,6 +160,11 @@ export class Database {
     } catch (e) {
         return_function(e.toString());
     }
+  }
+
+  getDateFromTime(time) {
+    var date = new Date(time * 1000);
+    return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
   }
 
   /*
