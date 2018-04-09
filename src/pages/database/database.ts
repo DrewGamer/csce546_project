@@ -36,6 +36,15 @@ export class Database {
       });
   }
 
+  //Overwrites "id" with "document" inside of "collection" and returns "success" on completion or an error message on failure. 
+  async overwrite(collection, id, document, return_function) {
+    this.afs.collection(collection).doc(id).set(document).then( () => {
+      return_function("success");
+    }).catch( () => {
+      return_function("failure");
+    });
+  }
+
   //Gets every document inside of "collection" and returns it as an array. 
   async get(collection, return_function) {
     var col = this.afs.collection(collection);
@@ -51,30 +60,15 @@ export class Database {
     });
   }
 
-  /*async query(collection, field, comparator, match, return_function) {
-    var col = this.afs.collection(collection, (ref) => {
-      return ref.where(field, comparator, match);
-    });
-    col.valueChanges().subscribe( items => {
-      var documents = new Array(items.length);
-      for (var i = 0; i < items.length; i++) {
-        documents[i] = {};
-        for (var item in items[i]) {
-          documents[i][item] = items[i][item];
-        }
-      }
-      return_function(documents);
-    });
-  }*/
-
   //Gets documents inside of "collection" and returns it as an array. 
   //Only returns documents in which the field is related to the match by the comparator.
   async query(collection, field, comparator, match, return_function) {
-    /*if (field == "id") {
+    if (field == "id") {
       var docRef = this.afs.collection(collection).doc(match);
       docRef.ref.get().then( (document) => {
         if (document.exists) {
-          var documents = {document.data()};
+          var documents = new Array(1);
+          documents[0] = document.data();
           return_function(documents);
         } else {
           return_function(undefined);
@@ -83,7 +77,7 @@ export class Database {
         return_function(undefined);
       });
       return;
-    }*/
+    }
     //var count = undefined;
     var col = this.afs.collection(collection, ref => {
       return ref.where(field, comparator, match);
@@ -113,7 +107,7 @@ export class Database {
   //Deletes all documents in "collection" in which the "field" equals "match".
   //Returns the number of items deleted.
   async delete(collection, field, match, return_function) {
-    var count = undefined;
+    var count = -1;
     var col = this.afs.collection(collection, ref => {
       return ref.where(field, "==", match);
     });
@@ -128,8 +122,12 @@ export class Database {
         var id = documents[i]["id"];
         col.doc(id).delete();
       }
-      if (count == undefined) count = documents.length;
-      if (documents.length == 0) return_function(count);
+      if (count == -1) count = documents.length;
+      if (documents.length == 0) {
+        col.snapshotChanges().map( actions => {} ).subscribe( documents => {} );
+        col = null;
+        return_function(count);
+      } 
     });
   }
 

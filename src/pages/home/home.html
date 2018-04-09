@@ -15,13 +15,19 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <table style="width:100%">
+    <tr style="text-align:center">
+      <td id="btnRecommended" (click)="slide(0)" style="width:33%;border-bottom:2px solid;border-color:blue;">Recommended</td>
+      <td id="btnPopular" (click)="slide(1)" style="width:33%">Popular &#9733;</td>
+      <td id="btnToday" (click)="slide(2)" style="width:33%">Today &#9733;</td>
+    </tr>
+  </table>
+  <ion-slides (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideDidChange()">
+    <ion-slide>
+      <h1>test</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>test2</h1>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

@@ -24,7 +24,7 @@ export class HomePage {
     });*/
 
     //Get all documents in the "Event" collection.
-    db.query("Event", "id", "==", "gillbychjcVYw6DhakGY", (documents) => {
+    /*db.query("Event", "id", "==", "gillbychjcVYw6DhakGY", (documents) => {
 	  var s = "";
       for (var i = 0; i < documents.length; i++) {
         s += i + " {\n";
@@ -34,7 +34,7 @@ export class HomePage {
         s += "}\n";
       }
       alert(s);
-    });
+    });*/
 
 
     /*
@@ -70,6 +70,22 @@ export class HomePage {
    */
   }
 
+
+  slideDidChange() {
+    alert($scope);
+  }
+
+  slide(index) {
+    var buttons = new Array(0);
+    buttons[0] = document.getElementById("btnRecommended");
+    buttons[1] = document.getElementById("btnPopular");
+    buttons[2] = document.getElementById("btnToday");
+
+    for (var i = 0; i < buttons.length; i++)
+      buttons[i].style.borderBottom = "2px solid white";
+    
+    buttons[index].style.borderBottom = "2px solid blue";
+  }
 }
 
 //arsailor89@yahoo.com
