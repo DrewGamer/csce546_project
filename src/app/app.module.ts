@@ -12,6 +12,7 @@ import { AccountPage } from '../pages/account/account';
 import { PromotePage } from '../pages/promote/promote';
 import { RegisterPage } from '../pages/register/register';
 import { Database } from '../pages/database/database';
+import { Camera } from '@ionic-native/camera';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -78,6 +79,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

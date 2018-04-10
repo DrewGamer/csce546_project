@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Database } from '../database/database';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-promote',
@@ -8,9 +9,31 @@ import { Database } from '../database/database';
 })
 export class PromotePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  imagePreview;
+  eventPhoto;
+  date = new Date().toDateString();
+  name;
+  category;
+  startTime;
+  endTime;
+  description;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera:Camera) {
     var db = new Database();
-	db.setParams(navParams.data);
+    db.setParams(navParams.data);
+    this.imagePreview = "http://www.pixedelic.com/themes/geode/demo/wp-content/uploads/sites/4/2014/04/placeholder4.png";
+
+    db.get("Event", (documents) => {
+      var s = "";
+      for (var i = 0; i < documents.length; i++) {
+        s += i + " {\n";
+        for (var field in documents[i]) {
+          s += "\t" + field + ": " + documents[i][field] + "\n";
+        }
+        s += "}\n";
+      }
+      console.log(s);
+    });
 
 
     /*
@@ -46,6 +69,36 @@ export class PromotePage {
    */
   }
 
-}
+  takePhoto() {
+    const options: CameraOptions = {
+    quality: 50,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    correctOrientation: true
+  }
 
-//arsailor89@yahoo.com
+    this.camera.getPicture(options).then((imageData) => {
+      this.eventPhoto = imageData;
+    }, (err) => {
+      // Handle error
+    });
+
+    this.imagePreview = this.eventPhoto;
+    this.ionViewWillEnter();
+  }
+
+  saveItem()
+  {
+    this.name = "";
+    this.category = "";
+    this.startTime = "";
+    this.endTime = "";
+    this.description = "";
+  }
+
+  ionViewWillEnter() {
+
+  }
+
+}
