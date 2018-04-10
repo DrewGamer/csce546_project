@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { CategoriesPage } from '../pages/categories/categories';
 import { AccountPage } from '../pages/account/account';
 import { PromotePage } from '../pages/promote/promote';
+import { RegisterPage } from '../pages/register/register';
 import { Database } from '../pages/database/database';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,6 +46,7 @@ export const firebaseConfig = {
     CategoriesPage,
     PromotePage,
     AccountPage,
+    RegisterPage,
 	Database
   ],
   imports: [
@@ -70,6 +72,7 @@ export const firebaseConfig = {
     CategoriesPage,
     PromotePage,
     AccountPage,
+    RegisterPage,
 	Database
   ],
   providers: [

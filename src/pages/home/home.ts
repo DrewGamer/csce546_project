@@ -71,7 +71,7 @@ export class HomePage {
   }
 
 
-  slideDidChange() {
+  slideDidChange($scope) {
     alert($scope);
   }
 

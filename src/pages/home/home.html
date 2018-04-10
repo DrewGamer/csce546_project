@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons start>
-    <button ion-button icon-only color="primary" (click)="openCalender()">
+    <button ion-button icon-only color="dark" (click)="openCalender()">
         <ion-icon name="calendar"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title class="titledecoration">Huger Street</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only color="primary" (click)="openSearch()">
+      <button ion-button icon-only color="dark" (click)="openSearch()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
@@ -22,7 +22,7 @@
       <td id="btnToday" (click)="slide(2)" style="width:33%">Today &#9733;</td>
     </tr>
   </table>
-  <ion-slides (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideDidChange()">
+  <ion-slides (ionSlideDidChange)="slideDidChange($scope)" (ionSlideWillChange)="slideDidChange()">
     <ion-slide>
       <h1>test</h1>
     </ion-slide>
