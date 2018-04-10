@@ -12,8 +12,22 @@ export class HomePage {
     var db = new Database();
 	db.setParams(navParams.data);
 
+   /*
+    //Get all documents in the "Event" collection.
+    db.get("Event", (documents) => {
+      var s = "";
+      for (var i = 0; i < documents.length; i++) {
+        s += i + " {\n";
+        for (var field in documents[i]) {
+          s += "\t" + field + ": " + documents[i][field] + "\n";
+        }
+        s += "}\n";
+      }
+      alert(s);
+    });
+
     //Login and get the current logged in user.
-	/*db.login("blobman23@email.com", "blobman23", (status) => {
+	  db.login("blobman23@email.com", "blobman23", (status) => {
       if (status == "success") {
         db.currentUser( (user) => {
           alert(user);
@@ -21,7 +35,7 @@ export class HomePage {
       } else {
         alert(status);
       }
-    });*/
+    });
 
     //Get all documents in the "Event" collection.
     /*db.query("Event", "id", "==", "gillbychjcVYw6DhakGY", (documents) => {
@@ -50,29 +64,11 @@ export class HomePage {
       }
     });
 
-    //Get all documents in the "Event" collection.
-    db.get("Event", (documents) => {
-      var s = "";
-      for (var i = 0; i < documents.length; i++) {
-        s += i + " {\n";
-        for (var field in documents[i]) {
-          s += "\t" + field + ": " + documents[i][field] + "\n";
-        }
-        s += "}\n";
-      }
-      alert(s);
-    });
-
     db.delete("Event", "name", "cat", (count) => {
       alert(count);
     });
 
    */
-  }
-
-
-  slideDidChange() {
-    alert($scope);
   }
 
   slide(index) {
@@ -85,6 +81,16 @@ export class HomePage {
       buttons[i].style.borderBottom = "2px solid white";
     
     buttons[index].style.borderBottom = "2px solid blue";
+
+    var slides = new Array(buttons.length);
+    for (i = 0; i < slides.length; i++) {
+      slides[i] = document.getElementById("slide" + (i + 1));
+      slides[i].style.display = "none";
+    }
+
+    slides[index].style.display = "";
+    
+
   }
 }
 
