@@ -32,12 +32,17 @@
     </ion-item>
 
     <ion-item>
-      <div align="center">
+      <span float-left style="color:gray">Take A Photo For Your Event</span>
+      <!--div align="center">
         <ion-img width="150" height="150" src={{imagePreview}}></ion-img>
-      </div>
-      <div align="center">
+      </div-->
+      <span float-right>
         <button ion-button color="secondary" icon-only (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
-      </div>
+      </span>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button (click)="launchLocationPage()">Choose Location</button>
     </ion-item>
 
     <ion-item>

@@ -12,6 +12,7 @@ import { AccountPage } from '../pages/account/account';
 import { PromotePage } from '../pages/promote/promote';
 import { RegisterPage } from '../pages/register/register';
 import { Database } from '../pages/database/database';
+import { LocationSelect } from '../pages/location-select/location-select';
 import { Camera } from '@ionic-native/camera';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -25,6 +26,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { Connectivity } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMaps } from '../providers/google-maps/google-maps';
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 // AF2 Settings
@@ -48,7 +53,8 @@ export const firebaseConfig = {
     PromotePage,
     AccountPage,
     RegisterPage,
-	Database
+	Database,
+    LocationSelect
   ],
   imports: [
     BrowserModule,
@@ -74,13 +80,18 @@ export const firebaseConfig = {
     PromotePage,
     AccountPage,
     RegisterPage,
-	Database
+	Database,
+    LocationSelect
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Geolocation,
+    Network,
+    Connectivity,
+    GoogleMaps
   ]
 })
 export class AppModule {}

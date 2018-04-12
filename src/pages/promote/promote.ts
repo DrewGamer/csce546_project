@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Database } from '../database/database';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { LocationSelect } from '../location-select/location-select';
 
 @Component({
   selector: 'page-promote',
@@ -18,7 +19,7 @@ export class PromotePage {
   endTime;
   description;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera:Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera:Camera, public modalCtrl:ModalController) {
     var db = new Database();
     db.setParams(navParams.data);
     this.imagePreview = "http://www.pixedelic.com/themes/geode/demo/wp-content/uploads/sites/4/2014/04/placeholder4.png";
@@ -95,6 +96,16 @@ export class PromotePage {
     this.startTime = "";
     this.endTime = "";
     this.description = "";
+  }
+
+  launchLocationPage() {
+    let modal = this.modalCtrl.create(LocationSelect);
+ 
+        modal.onDidDismiss((location) => {
+            console.log(location);
+        });
+ 
+        modal.present();
   }
 
   ionViewWillEnter() {
