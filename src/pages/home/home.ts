@@ -8,10 +8,19 @@ import { Database } from '../database/database';
 })
 export class HomePage {
 
+  public events = new Array(0);
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     var db = new Database();
-	db.setParams(navParams.data);
+	  db.setParams(navParams.data);
 
+    db.get("Event", (documents) => {
+      for (var i = 0; i < documents.length; i++) {
+        if (documents[i]["id"] != "meta") {
+          this.events[this.events.length] = documents[i];
+          this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (i % 3) + 1 ) + ".jpg";
+        }
+      }
+    });
    /*
     //Get all documents in the "Event" collection.
     db.get("Event", (documents) => {

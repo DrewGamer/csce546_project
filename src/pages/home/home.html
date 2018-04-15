@@ -23,7 +23,15 @@
     </tr>
   </table>
   <div id="slide1" style="text-align:center">
-    <h1>test</h1>
+    <table style="width:100%">
+      <tr style="width:100%; text-align:center" *ngFor="let event of events">
+        <td style="width:100%">
+          <img style="width:100%" src={{event.image}} />
+          <p>{{event.name}}</p>
+          <hr />
+        </td>
+      </tr>
+     </table>
   </div>
   <div id="slide2" style="text-align:center;display:none">
     <h1>test2</h1>
