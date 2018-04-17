@@ -14,17 +14,25 @@ export class EventPage {
     this.db = new Database();
     this.db.setParams(navParams.data["database_data"]);
 
-    alert(navParams.data["event_id"]);
     this.db.query("Event", "id", "==", navParams.data["event_id"], (documents) => {
       for (var i in documents[0]) {
         this.event[this.event.length] = documents[0][i];
       }
-      this.event["image"] = "../../assets/imgs/example" + ( (Math.floor(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
+      var img = (Math.floor(Math.random() * 1000) % 3) + 1;
+      this.event["image"] = "../../assets/imgs/example" + img.toString() + ".jpg";
     });
   }
 
   goBack() {
     this.navCtrl.pop();
+  }
+
+  doFavorite() {
+    alert("Event favorited!");
+  }
+
+  doAttend() {
+    alert("Your are now attending this event!");
   }
 }
 

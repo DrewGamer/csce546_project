@@ -94,6 +94,10 @@ export class HomePage {
     
     buttons[index].style.borderBottom = "2px solid blue";
 
+    var d = new Date().getTime();
+    var t1 = Math.floor(d / 1000) - 60*60*60*12;
+    var t2 = Math.floor(d / 1000) + 60*60*60*12;
+
     switch (index) {
       case 0:
         this.events = new Array(0);
@@ -101,7 +105,8 @@ export class HomePage {
           for (var i = 0; i < documents.length; i++) {
             if (documents[i]["id"] != "meta") {
               this.events[this.events.length] = documents[i];
-              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+              var img = (Math.floor(Math.random() * 1000) % 3) + 1;
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + img.toString() + ".jpg";
             }
           }
         });
@@ -112,19 +117,19 @@ export class HomePage {
           for (var i = 0; i < documents.length; i++) {
             if (documents[i]["id"] != "meta") {
               this.events[this.events.length] = documents[i];
-              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
+              var img = (Math.floor(Math.random() * 1000) % 3) + 1;
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + img.toString() + ".jpg";
             }
           }
         });
       case 2:
         this.events = new Array(0);
-        var t1 = Math.floor(new Date() / 1000) - 60*60*60*12;
-        var t2 = Math.floor(new Date() / 1000) + 60*60*60*12;
         this.db.doubleOrderedQuery("Event", "start_time", ">=", t1, "start_time", "<=", t2, (documents) => {
           for (var i = 0; i < documents.length; i++) {
             if (documents[i]["id"] != "meta") {
               this.events[this.events.length] = documents[i];
-              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
+              var img = (Math.floor(Math.random() * 1000) % 3) + 1;
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + img.toString() + ".jpg";
             }
           }
         });
