@@ -46,7 +46,8 @@ export class CategoriesPage {
           }
         }
         if (!found) {
-          this.events.slice(i, 1);
+          this.events.splice(i, 1);
+          i -= 1;
           if (this.events.length == 0) break;
         }
       }
