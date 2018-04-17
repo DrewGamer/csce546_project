@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only color="primary" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title class="titledecoration">Huger Street</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<ion-content padding>
+  <div style="text-align:center">
+    <table style="width:100%">
+      <tr style="width:100%; text-align:center" *ngFor="let element of event">
+        <td style="width:100%">
+          <p>{{element}}</p>
+          <hr />
+        </td>
+      </tr>
+     </table>
+  </div>
+  <button>Favorite</button>
+</ion-content>

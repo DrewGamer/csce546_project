@@ -22,21 +22,15 @@
       <td id="btnToday" (click)="slide(2)" style="width:33%">Today &#9733;</td>
     </tr>
   </table>
-  <div id="slide1" style="text-align:center">
+  <div style="text-align:center">
     <table style="width:100%">
       <tr style="width:100%; text-align:center" *ngFor="let event of events">
-        <td style="width:100%">
+        <td style="width:100%" (click)="openEventPage(event.id)">
           <img style="width:100%" src={{event.image}} />
           <p>{{event.name}}</p>
           <hr />
         </td>
       </tr>
      </table>
-  </div>
-  <div id="slide2" style="text-align:center;display:none">
-    <h1>test2</h1>
-  </div>
-  <div id="slide3" style="text-align:center;display:none">
-    <h1>test3</h1>
   </div>
 </ion-content>

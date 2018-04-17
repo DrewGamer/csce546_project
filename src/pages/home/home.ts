@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Database } from '../database/database';
+import { EventPage } from '../event/event';
 
 @Component({
   selector: 'page-home',
@@ -9,11 +10,12 @@ import { Database } from '../database/database';
 export class HomePage {
 
   public events = new Array(0);
+  public db: Database;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    var db = new Database();
-	  db.setParams(navParams.data);
+    this.db = new Database();
+	  this.db.setParams(navParams.data);
 
-    db.get("Event", (documents) => {
+    this.db.query("Event", "favorites", ">=", 0, (documents) => {
       for (var i = 0; i < documents.length; i++) {
         if (documents[i]["id"] != "meta") {
           this.events[this.events.length] = documents[i];
@@ -21,6 +23,7 @@ export class HomePage {
         }
       }
     });
+
    /*
     //Get all documents in the "Event" collection.
     db.get("Event", (documents) => {
@@ -91,15 +94,46 @@ export class HomePage {
     
     buttons[index].style.borderBottom = "2px solid blue";
 
-    var slides = new Array(buttons.length);
-    for (i = 0; i < slides.length; i++) {
-      slides[i] = document.getElementById("slide" + (i + 1));
-      slides[i].style.display = "none";
+    switch (index) {
+      case 0:
+        this.events = new Array(0);
+        this.db.query("Event", "favorites", ">=", 0, (documents) => {
+          for (var i = 0; i < documents.length; i++) {
+            if (documents[i]["id"] != "meta") {
+              this.events[this.events.length] = documents[i];
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+            }
+          }
+        });
+        break;
+      case 1:
+        this.events = new Array(0);
+        this.db.orderedQuery("Event", "favorites", ">=", 5, (documents) => {
+          for (var i = 0; i < documents.length; i++) {
+            if (documents[i]["id"] != "meta") {
+              this.events[this.events.length] = documents[i];
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+            }
+          }
+        });
+      case 2:
+        this.events = new Array(0);
+        var t1 = Math.floor(new Date() / 1000) - 60*60*60*12;
+        var t2 = Math.floor(new Date() / 1000) + 60*60*60*12;
+        this.db.doubleOrderedQuery("Event", "start_time", ">=", t1, "start_time", "<=", t2, (documents) => {
+          for (var i = 0; i < documents.length; i++) {
+            if (documents[i]["id"] != "meta") {
+              this.events[this.events.length] = documents[i];
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+            }
+          }
+        });
+        break;
     }
+  }
 
-    slides[index].style.display = "";
-    
-
+  openEventPage(event) {
+    this.navCtrl.push(EventPage, {"event_id": event, "database_data": this.navParams.data});
   }
 }
 

@@ -103,7 +103,80 @@ export class Database {
     
   }
 
+  //Gets documents inside of "collection" and returns it as an array. 
+  //Only returns documents in which the field is related to the match by the comparator.
+  //Orders by the field "order".
+  async orderedQuery(collection, field, comparator, match, return_function) {
+    if (field == "id") {
+      var docRef = this.afs.collection(collection).doc(match);
+      docRef.ref.get().then( (document) => {
+        if (document.exists) {
+          var documents = new Array(1);
+          documents[0] = document.data();
+          return_function(documents);
+        } else {
+          return_function(undefined);
+        }
+      }).catch( (error) => {
+        return_function(undefined);
+      });
+      return;
+    }
+    //var count = undefined;
+    var col = this.afs.collection(collection, ref => {
+      return ref.orderBy(field).where(field, comparator, match);
+    });
+    col.snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    }).subscribe( items => {
+      var documents = new Array(items.length);
+      for (var i = 0; i < items.length; i++) {
+        documents[i] = {};
+        for (var item in items[i]) {
+          documents[i][item] = items[i][item];
+        }
+      }
+      return_function(documents);
+      //if (count == undefined) count = documents.length;
+      //if (documents.length == 0) return_function(count);
+    });
+    
+  }
 
+
+  //Gets documents inside of "collection" and returns it as an array. 
+  //Only returns documents in which the field is related to the match by the comparator.
+  //Orders by the field "order".
+  async doubleOrderedQuery(collection, field1, comparator1, match1, field2, comparator2, match2, return_function) {
+    
+    //var count = undefined;
+    var col = this.afs.collection(collection, ref => {
+      return ref.orderBy(field1).where(field1, comparator1, match1).where(field2, comparator2, match2);
+    });
+    col.snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    }).subscribe( items => {
+      var documents = new Array(items.length);
+      for (var i = 0; i < items.length; i++) {
+        documents[i] = {};
+        for (var item in items[i]) {
+          documents[i][item] = items[i][item];
+        }
+      }
+      return_function(documents);
+      //if (count == undefined) count = documents.length;
+      //if (documents.length == 0) return_function(count);
+    });
+    
+  }
   //Deletes all documents in "collection" in which the "field" equals "match".
   //Returns the number of items deleted.
   async delete(collection, field, match, return_function) {

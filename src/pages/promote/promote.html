@@ -1,17 +1,56 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title class="titledecoration">Promote</ion-title>
+  <ion-navbar color="primary">
+    <ion-title align="center" class="titledecoration">Promote An Event!</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Event Name</ion-label>
+      <ion-input type="text" [(ngModel)]="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categories</ion-label>
+      <ion-select interface="alert" multiple="true" [(ngModel)]="category">
+          <ion-option value="Networking">Networking</ion-option>
+          <ion-option value="Film&Media">Film & Media</ion-option>
+          <ion-option value="Talks">Talks</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" placeholder={{date}} [(ngModel)]="startTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" placeholder={{date}} [(ngModel)]="endTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <span float-left style="color:gray">Take A Photo For Your Event</span>
+      <!--div align="center">
+        <ion-img width="150" height="150" src={{imagePreview}}></ion-img>
+      </div-->
+      <span float-right>
+        <button ion-button color="secondary" icon-only (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
+      </span>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button color="secondary" (click)="launchLocationPage()">Choose Location</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea type="text" [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <button full ion-button color="secondary" (click)="saveItem()">Save</button>
 </ion-content>
