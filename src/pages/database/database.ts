@@ -48,7 +48,13 @@ export class Database {
   //Gets every document inside of "collection" and returns it as an array. 
   async get(collection, return_function) {
     var col = this.afs.collection(collection);
-    col.valueChanges().subscribe( items => {
+    col.snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    }).subscribe( items => {
       var documents = new Array(items.length);
       for (var i = 0; i < items.length; i++) {
         documents[i] = {};
@@ -57,7 +63,10 @@ export class Database {
         }
       }
       return_function(documents);
+      //if (count == undefined) count = documents.length;
+      //if (documents.length == 0) return_function(count);
     });
+    
   }
 
   //Gets documents inside of "collection" and returns it as an array. 

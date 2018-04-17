@@ -15,13 +15,25 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <div style="text-align:center" id="categories-view">
+    <table style="width:100%">
+      <tr style="width:100%; text-align:center" *ngFor="let category of categories">
+        <td style="width:100%" (click)="openCategory(category)">
+          <p>{{category}}</p>
+          <hr />
+        </td>
+      </tr>
+     </table>
+  </div>
+  <div style="text-align:center" id="documents-view">
+    <table style="width:100%">
+      <tr style="width:100%; text-align:center" *ngFor="let event of events">
+        <td style="width:100%" (click)="openEventPage(event.id)">
+          <img style="width:100%" src={{event.image}} />
+          <p>{{event.name}}</p>
+          <hr />
+        </td>
+      </tr>
+     </table>
+  </div>
 </ion-content>
