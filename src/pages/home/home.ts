@@ -19,7 +19,7 @@ export class HomePage {
       for (var i = 0; i < documents.length; i++) {
         if (documents[i]["id"] != "meta") {
           this.events[this.events.length] = documents[i];
-          this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (i % 3) + 1 ) + ".jpg";
+          this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (i % 3) + 1 ).toString() + ".jpg";
         }
       }
     });
@@ -112,7 +112,7 @@ export class HomePage {
           for (var i = 0; i < documents.length; i++) {
             if (documents[i]["id"] != "meta") {
               this.events[this.events.length] = documents[i];
-              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
             }
           }
         });
@@ -124,7 +124,7 @@ export class HomePage {
           for (var i = 0; i < documents.length; i++) {
             if (documents[i]["id"] != "meta") {
               this.events[this.events.length] = documents[i];
-              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ) + ".jpg";
+              this.events[this.events.length-1]["image"] = "../../assets/imgs/example" + ( (parseInt(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
             }
           }
         });

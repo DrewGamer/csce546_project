@@ -19,7 +19,7 @@ export class EventPage {
       for (var i in documents[0]) {
         this.event[this.event.length] = documents[0][i];
       }
-      this.event["image"] = "../../assets/imgs/example" + ( (i % 3) + 1 ) + ".jpg";
+      this.event["image"] = "../../assets/imgs/example" + ( (Math.floor(Math.random() * 1000) % 3) + 1 ).toString() + ".jpg";
     });
   }
 
