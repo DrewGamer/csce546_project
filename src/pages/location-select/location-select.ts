@@ -65,7 +65,6 @@ export class LocationSelect {
             });
  
         });
- 
     }
  
     searchPlace(){
@@ -75,7 +74,6 @@ export class LocationSelect {
         if(this.query.length > 0 && !this.searchDisabled) {
  
             let config = {
-                types: ['geocode'],
                 input: this.query
             }
  
@@ -104,6 +102,8 @@ export class LocationSelect {
  
     close(){
         this.viewCtrl.dismiss();
-    }  
+    }
+
+
  
 }

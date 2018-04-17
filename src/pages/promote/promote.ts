@@ -18,11 +18,15 @@ export class PromotePage {
   startTime;
   endTime;
   description;
+  location;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera:Camera, public modalCtrl:ModalController) {
     var db = new Database();
     db.setParams(navParams.data);
     this.imagePreview = "http://www.pixedelic.com/themes/geode/demo/wp-content/uploads/sites/4/2014/04/placeholder4.png";
+    this.location = {
+      name: "<event location>"
+    };
 
     db.get("Event", (documents) => {
       var s = "";
@@ -96,6 +100,7 @@ export class PromotePage {
     this.startTime = "";
     this.endTime = "";
     this.description = "";
+    this.location = "";
   }
 
   launchLocationPage() {
@@ -103,6 +108,7 @@ export class PromotePage {
  
         modal.onDidDismiss((location) => {
             console.log(location);
+            this.location = location;
         });
  
         modal.present();
