@@ -14,10 +14,8 @@
 
     <ion-item>
       <ion-label>Categories</ion-label>
-      <ion-select interface="alert" multiple="true" [(ngModel)]="category">
-          <ion-option value="Networking">Networking</ion-option>
-          <ion-option value="Film&Media">Film & Media</ion-option>
-          <ion-option value="Talks">Talks</ion-option>
+      <ion-select interface="alert" multiple="true" [(ngModel)]="categories">
+          <ion-option *ngFor="let category of categoryOptions" value="{{category}}">{{category}}</ion-option>
       </ion-select>
     </ion-item>
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Database } from '../database/database';
 import { RegisterPage } from '../register/register';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 @Component({
   selector: 'page-account',
@@ -13,7 +14,7 @@ export class AccountPage {
   password;
   db;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadCtrl:LoadingController, private fb: Facebook) {
     this.db = new Database();
     this.db.setParams(navParams.data);
 
@@ -39,8 +40,7 @@ export class AccountPage {
    */
   }
 
-  doSignIn()
-  {
+  doSignIn() {
     let loader = this.loadCtrl.create({
       content: 'Loging in...',
 
@@ -58,6 +58,14 @@ export class AccountPage {
         loader.dismissAll();
       }
     });
+  }
+
+  public doFacebookSignIn() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+    .catch(e => console.log('Error logging into Facebook', e));
+
+    this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
   }
 
 }

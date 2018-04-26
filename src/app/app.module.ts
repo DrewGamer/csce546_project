@@ -31,6 +31,7 @@ import { Connectivity } from '../providers/connectivity-service/connectivity-ser
 import { GoogleMaps } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 
 // AF2 Settings
@@ -94,7 +95,8 @@ export const firebaseConfig = {
     Geolocation,
     Network,
     Connectivity,
-    GoogleMaps
+    GoogleMaps,
+    Facebook,
   ]
 })
 export class AppModule {}

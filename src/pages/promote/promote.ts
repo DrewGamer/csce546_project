@@ -14,21 +14,23 @@ export class PromotePage {
   eventPhoto;
   date = new Date().toDateString();
   name;
-  category;
+  categories;
+  categoryOptions = [];
   startTime;
   endTime;
   description;
   location;
+  db;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera:Camera, public modalCtrl:ModalController) {
-    var db = new Database();
-    db.setParams(navParams.data);
+    this.db = new Database();
+    this.db.setParams(navParams.data);
     this.imagePreview = "http://www.pixedelic.com/themes/geode/demo/wp-content/uploads/sites/4/2014/04/placeholder4.png";
     this.location = {
       name: "<event location>"
     };
 
-    db.get("Event", (documents) => {
+    this.db.get("Event", (documents) => {
       var s = "";
       for (var i = 0; i < documents.length; i++) {
         s += i + " {\n";
@@ -40,6 +42,13 @@ export class PromotePage {
       console.log(s);
     });
 
+    this.db.query("Event", "id", "=", "meta", (document)=>{
+      var categories = document[0].categories.toString().split(", ");
+      for (var i=0; i < categories.length; i++){
+        this.categoryOptions.push(categories[i]);
+      }
+      
+    })
 
     /*
 
@@ -95,8 +104,19 @@ export class PromotePage {
 
   saveItem()
   {
+    let newEvent = {
+      name: this.name,
+      categories: this.categories,
+      start_time: this.startTime,
+      end_time: this.endTime,
+      description: this.description,
+      location: this.location
+    }
+    //this.db.set("Event", newEvent, (success)=>{
+      alert("Event Saved!");
+    //});
     this.name = "";
-    this.category = "";
+    this.categories = "";
     this.startTime = "";
     this.endTime = "";
     this.description = "";
