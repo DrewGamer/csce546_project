@@ -13,11 +13,23 @@ export class AccountPage {
   username;
   password;
   db;
+  isLoggedIn:boolean = false;
+  users: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadCtrl:LoadingController, private fb: Facebook) {
     this.db = new Database();
     this.db.setParams(navParams.data);
 
+    fb.getLoginStatus()
+    .then(res => {
+      console.log(res.status);
+      if(res.status === "connect") {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log(e));
 
     /*
     //Get all documents in the "Event" collection.
@@ -62,10 +74,44 @@ export class AccountPage {
 
   public doFacebookSignIn() {
     this.fb.login(['public_profile', 'user_friends', 'email'])
-    .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+    .then(res => {
+      if(res.status === "connected") {
+        this.isLoggedIn = true;
+        this.getUserDetail(res.authResponse.userID);
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
     .catch(e => console.log('Error logging into Facebook', e));
 
-    this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
+    /*this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then((res: FacebookLoginResponse) => {
+      console.log('Logged into Facebook!', res);
+      alert("Logged into Facebook!");
+    })
+    .catch(e => {
+      console.log('Error logging into Facebook', e);
+      alert("Error logging into Facebook");
+    });
+
+    this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);*/
+  }
+
+  doFacebookLogout() {
+  this.fb.logout()
+    .then( res => this.isLoggedIn = false)
+    .catch(e => console.log('Error logout from Facebook', e));
+  }
+
+  getUserDetail(userid) {
+  this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
+    .then(res => {
+      console.log(res);
+      this.users = res;
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
 
 }

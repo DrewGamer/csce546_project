@@ -31,8 +31,28 @@
     </ion-list>
   </form>
   <p style="text-align: center">OR</p>
-  <div padding>
+  <div *ngIf="isLoggedIn; else facebookLogin">
+    <h2>Hi, {{users.name}} ({{users.email}})</h2>
+    <p>
+      Gender: {{users.gender}}
+    </p>
+    <p>
+      <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
+    </p>
+    <p>
+      <button ion-button icon-right (click)="doFacebookLogout()">
+        Logout
+      </button>
+    </p>
+  </div>
+  <ng-template #facebookLogin>
+    <button ion-button icon-right (click)="doFacebookSignIn()">
+      Login with
+      <ion-icon name="logo-facebook"></ion-icon>
+    </button>
+  </ng-template>
+  <!--div padding>
     <p style="text-align: center">Sign in with Facebook</p>
     <button ion-button color="primary" (click)="doFacebookSignIn()" block>Facebook Login</button>
-  </div>
+  </div-->
 </ion-content>
