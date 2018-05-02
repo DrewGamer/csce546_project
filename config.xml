@@ -82,18 +82,11 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-facebook4" spec="^2.0.0">
         <variable name="APP_ID" value="242294123176554" />
         <variable name="APP_NAME" value="Hugerstreet" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" /> 
+    <com.facebook.login.widget.LoginButton android:id="@+id/login_button" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_marginBottom="30dp" android:layout_marginTop="30dp" android:layout_width="wrap_content" />
+    <engine name="android" spec="7.0.0" />
 </widget>
